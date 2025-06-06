@@ -68,3 +68,41 @@ FROM productos;
 --15. **Listar todos los ingredientes disponibles para personalizar una pizza:**
 
 SELECT * FROM ingredientes;
+
+--16 Calcular el costo total de un pedido (incluyendo ingredientes adicionales):
+SELECT pedidos.pedido_id,SUM(dp.cantidad * dp.precio_unitario) AS total_pedido
+FROM pedidos 
+JOIN detalle_pedido dp ON pedidos.pedido_id = dp.pedido_id
+GROUP BY pedidos.pedido_id;
+
+--17. **Listar los clientes que han hecho más de 5 pedidos:**
+
+SELECT 
+    usuarios.usuario_id,
+    usuarios.nombre,
+    COUNT(pedidos.pedido_id) AS cantidad_pedidos
+FROM usuarios
+JOIN pedidos ON usuarios.usuario_id = pedidos.cliente_id
+GROUP BY usuarios.usuario_id, usuarios.nombre
+HAVING COUNT(pedidos.pedido_id) > 5;
+
+-- 18. **Buscar pedidos programados para recogerse después de una hora específica:**
+
+SELECT 
+    pedidos.pedido_id,
+    usuarios.nombre AS cliente,
+    pedidos.fecha_pedido
+FROM pedidos
+JOIN usuarios ON pedidos.cliente_id = usuarios.usuario_id
+WHERE pedidos.fecha_pedido > '2025-06-06 14:00:00';
+
+-- 19. **Listar todos los combos de pizzas con bebidas disponibles en el menú:**
+
+
+SELECT 
+    pizza.nombre AS pizza,
+    bebida.nombre AS bebida
+FROM productos AS pizza
+JOIN productos AS bebida ON pizza.producto_id != bebida.producto_id
+WHERE pizza.ingredientes_id IS NOT NULL
+  AND bebida.ingredientes_id IS NULL;
