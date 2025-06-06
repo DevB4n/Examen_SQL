@@ -48,4 +48,23 @@ JOIN productos ON pedidos.producto_id = productos.producto_id;
 --9 actualizar el precio de una pizza 
 
 
---10
+--11 Eliminar un producto del menú (bebida):
+SELECT * FROM productos;
+DELETE FROM productos WHERE producto_id = 2;
+
+--12 Eliminar un ingrediente
+SELECT * FROM  ingredientes;
+DELETE FROM ingredientes WHERE ingredientes.ingrediente_id = 1
+
+--13 Seleccionar todos los pedidos de un cliente
+SELECT  *
+FROM pedidos
+WHERE pedidos.cliente_id = 1
+
+--14 Listar todos los productos disponibles en el menú (pizzas y bebidas):
+SELECT * 
+FROM productos;
+
+--15. **Listar todos los ingredientes disponibles para personalizar una pizza:**
+
+SELECT * FROM ingredientes;
